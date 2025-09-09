@@ -11,11 +11,11 @@ terraform {
     key    = "vpc-test"
     region = "us-east-1"
     encrypt        = true
-    use_lockfile = true
+    lock_table     = "terraform-lock-table"
   }
 }
 
 provider "aws" {
-  # Configuration options
+  # Specify the AWS region for resource creation
   region = "us-east-1"
 }
