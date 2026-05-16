@@ -638,3 +638,21 @@ variable "mongodb_ports_vpn" {
   type        = list(number)
   default     = [27017]
 }
+
+variable "redis_ports_vpn" {
+  description = "List of Redis ports to allow from VPN and Bastion"
+  type        = list(number)
+  default     = [6379]
+}
+
+variable "mysql_ports_vpn" {
+  description = "List of MySQL ports to allow from VPN and Bastion"
+  type        = list(number)
+  default     = [3306]
+}
+
+variable "rabbitmq_ports_vpn" {
+  description = "List of RabbitMQ ports to allow from VPN and Bastion"
+  type        = list(number)
+  default     = [5672]
+}

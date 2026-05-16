@@ -1,6 +1,6 @@
 data "aws_ami" "openvpn" {
-  owners           = ["679593333241"]
-  most_recent      = true
+  owners      = ["679593333241"]
+  most_recent = true
 
   filter {
     name   = "name"
@@ -24,4 +24,8 @@ data "aws_ssm_parameter" "vpn_sg_id" {
 
 data "aws_ssm_parameter" "public_subnet_ids" {
   name = "/${var.project}/${var.environment}/public_subnet_ids"
+}
+
+data "aws_key_pair" "veaws" {
+  key_name = "veaws"
 }

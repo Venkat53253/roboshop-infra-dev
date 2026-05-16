@@ -4,37 +4,37 @@ resource "aws_key_pair" "openvpn" {
 }
 
 resource "aws_instance" "vpn" {
-  ami           = local.ami_id
-  instance_type = "t3.micro"
+  ami                    = local.ami_id
+  instance_type          = "t3.micro"
   vpc_security_group_ids = [local.vpn_sg_id]
-  subnet_id = local.public_subnet_id
+  subnet_id              = local.public_subnet_id
   #key_name = "veaws" # make sure this key exist in AWS
-  key_name = dataaws_key_pair.veaws.key_name
-  user_data = file("openvpn.sh")
+  key_name  = data.aws_key_pair.veaws.key_name
+  user_data = file("openvps.sh")
 
   tags = merge(
     local.common_tags,
     {
-        Name = "${var.project}-${var.environment}-vpn"
+      Name = "${var.project}-${var.environment}-vpn"
     }
   )
 }
 
 resource "aws_route53_record" "vpn" {
-  zone_id = var.zone_id
-  name    = "vpn-${var.environment}.${var.zone_name}"
-  type    = "A"
-  ttl     = 1
-  records = [aws_instance.vpn.public_ip]
+  zone_id         = var.zone_id
+  name            = "vpn-${var.environment}.${var.zone_name}"
+  type            = "A"
+  ttl             = 1
+  records         = [aws_instance.vpn.public_ip]
   allow_overwrite = true
 }
 
-variable "zone_id" {
-  description = "The Route53 Hosted Zone ID"
-  type        = string
-}
+# variable "zone_id" {
+#   description = "The Route53 Hosted Zone ID"
+#   type        = string
+# }
 
-variable "zone_name" {
-  description = "The Route53 zone domain name"
-  type        = string
-}
+# variable "zone_name" {
+#   description = "The Route53 zone domain name"
+#   type        = string
+# }
